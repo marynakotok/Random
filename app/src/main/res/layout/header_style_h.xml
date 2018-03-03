@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="70dp"
+    android:orientation="horizontal"
+    android:background="@color/colorTextinFields">
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="55sp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:paddingTop="20sp"
+        android:gravity="center_horizontal"
+        android:textColor="@color/colorFields"
+        android:textStyle="bold"
+        android:text="First Name" />
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="55sp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:paddingTop="20sp"
+        android:layout_marginRight="8sp"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="0sp"
+        android:textColor="@color/colorFields"
+        android:textStyle="bold"
+        android:text="Registration Date" />
+    <TextView
+        android:id="@+id/gender"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:paddingTop="20sp"
+        android:layout_width="42sp"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="0sp"
+        android:textColor="@color/colorFields"
+        android:textStyle="bold"
+        android:text="Gender" />
+    <TextView
+        android:id="@+id/username"
+        android:layout_width="60sp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:paddingTop="20sp"
+        android:gravity="center_horizontal"
+        android:textColor="@color/colorFields"
+        android:textStyle="bold"
+        android:text="Username" />
+    <TextView
+        android:id="@+id/password"
+        android:layout_width="60sp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:paddingTop="20sp"
+        android:gravity="center_horizontal"
+        android:textColor="@color/colorFields"
+        android:textStyle="bold"
+        android:text="Password"
+        />
+
+</LinearLayout>

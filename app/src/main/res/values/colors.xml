@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorFields">#d0d3e4</color>
+    <color name="colorTextinFields">#1f2336</color>
+    <color name="colorFieldsActive">#e8ef13</color>
+    <color name="colorButtonLight">#ffdc04</color>
+    <color name="colorButtonDark">#c2a906</color>
+    <color name="colorAccent">#2d2f89</color>
+    <color name="colorSpecified1">#9395f2</color>
+    <color name="colorTextSplash">#3cd416</color>
+    <color name="colorError">#fc9898</color>
+</resources>

@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Random</string>
+
+    <string name="reg_date">Registration Date</string>
+    <string name="number_users">Desired Number of Users*</string>
+    <string name="nationality">Nationality</string>
+    <string name="gender">Gender:  </string>
+    <string name="male">male</string>
+    <string name="female">female</string>
+    <string name="add">Add Users</string>
+    <string name="register_form_text">You need to fill up below form to add users!</string>
+    <string name="no_field_can_be_empty">No field can be empty</string>
+    <string name="passwords_must_be_the_same">Password and password again field must be the same</string>
+    <string name="here_is_values">Here is values: %1$s</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
