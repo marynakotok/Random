@@ -8,6 +8,10 @@
     <string name="male">male</string>
     <string name="female">female</string>
     <string name="add">Add Users</string>
+    <string name="login">Sign in</string>
+    <string name="loginbutton">Sign in</string>
+    <string name="username_users">Username</string>
+    <string name="password_users">Password</string>
     <string name="register_form_text">You need to fill up below form to add users!</string>
     <string name="no_field_can_be_empty">No field can be empty</string>
     <string name="passwords_must_be_the_same">Password and password again field must be the same</string>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.marina.random.LoginScreen"
+    android:orientation="vertical"
+    android:background="@color/colorAccent">
+
+    <ImageView
+        android:id="@+id/loginpicture"
+        android:layout_width="373dp"
+        android:layout_height="157dp"
+        app:srcCompat="@drawable/userlogin"
+        android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:id="@+id/logintext"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:text="@string/login"
+        android:textAllCaps="true"
+        android:textColor="@color/colorFieldsActive"
+        android:textSize="50dip"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/username_login"
+        android:layout_width="300sp"
+        android:layout_height="60sp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="35dp"
+        android:background="@drawable/fields_style"
+        android:hint="@string/username_users"
+        android:padding="10sp"
+        android:textColor="@color/colorTextinFields"
+        android:maxLength="10"
+        />
+
+    <EditText
+        android:id="@+id/password_login"
+        android:layout_width="300sp"
+        android:layout_height="60sp"
+        android:ems="10"
+        android:inputType="numberPassword"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="35dp"
+        android:background="@drawable/fields_style"
+        android:hint="@string/password_users"
+        android:padding="10sp"
+        android:textColor="@color/colorTextinFields"
+        android:maxLength="4"
+
+        />
+
+    <Button
+        android:id="@+id/loginB"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:layout_marginLeft="50sp"
+        android:layout_marginRight="50sp"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="80sp"
+        android:gravity="center"
+        android:text="@string/loginbutton"
+        android:background="@drawable/buttonstyle"/>
+
+</LinearLayout>
