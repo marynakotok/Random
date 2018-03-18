@@ -27,8 +27,6 @@ public class Splash extends AppCompatActivity {
                 } finally {
                     Intent openSecondActivity = new Intent(getApplicationContext(), LoginScreen.class);
                     startActivity(openSecondActivity);
-                    SQLiteDatabase database = dbHelper.getWritableDatabase();
-                    database.execSQL("delete from "+ DBHelper.TABLE_LOGIN);
                 }}};
         clock.start();
     }
