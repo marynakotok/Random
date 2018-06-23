@@ -69,3 +69,4 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
         googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(Liberty));
     }
 }
+

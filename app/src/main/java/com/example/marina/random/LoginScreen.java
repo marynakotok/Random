@@ -1,8 +1,11 @@
 package com.example.marina.random;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -10,17 +13,28 @@ import android.widget.Toast;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import javax.crypto.SecretKey;
+
 public class LoginScreen extends AppCompatActivity {
 
     private Button login;
     private EditText username, password;
     String usernamexml, passwordHashedxml, saltxml;
     String usernameString, passwordString;
+    private static final String TAG = Crypto.class.getSimpleName();
+    SecretKey key;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
+    String _phrase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_screen);
+
+        sharedPreferences = getSharedPreferences("com.example.marina.random", Context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+
         login = (Button) findViewById(R.id.loginB);
         username = (EditText) findViewById(R.id.username_login);
         password = (EditText) findViewById(R.id.password_login);
@@ -47,6 +61,11 @@ public class LoginScreen extends AppCompatActivity {
         {
             String passwordStringToHash = saltxml + passwordString;
             String passwordHashed = toHash(passwordStringToHash);
+
+            editor.remove("_phrase");
+            _phrase = encrypt(passwordString, passwordHashed);
+            editor.putString("_phrase", _phrase);
+            editor.commit();
 
             if (!passwordHashed.equals("-1"))
             {
@@ -82,6 +101,24 @@ public class LoginScreen extends AppCompatActivity {
             e.printStackTrace();
             return "-1";
         }
+    }
+
+    String getRawKey() {
+        if (key == null) {
+            return null;
+        }
+        return Crypto.toHex(key.getEncoded());
+    }
+
+    public SecretKey deriveKey(String password, byte[] salt) {
+        return Crypto.deriveKeyPbkdf2(salt, password);
+    }
+
+    public String encrypt(String plaintext, String password) {
+        byte[] salt = Crypto.generateSalt();
+        key = deriveKey(password, salt);
+        Log.d(TAG, "Generated key: " + getRawKey());
+        return Crypto.encrypt(plaintext, key, salt);
     }
 
 }

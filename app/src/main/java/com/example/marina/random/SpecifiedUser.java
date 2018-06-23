@@ -1,8 +1,6 @@
 package com.example.marina.random;
 
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -13,6 +11,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import net.sqlcipher.database.SQLiteDatabase;
+import net.sqlcipher.Cursor;
 
 import java.io.InputStream;
 import java.net.URL;
@@ -53,7 +53,8 @@ public class SpecifiedUser extends AppCompatActivity {
             idUser = mBundle.getInt("id");
         }
         //DATABASE
-        SQLiteDatabase database = dbHelper2.getWritableDatabase();
+        SQLiteDatabase.loadLibs(this);
+        SQLiteDatabase database = dbHelper2.getWritableDatabase("marina");
         Cursor cursor = database.query(DBHelper.TABLE_CONTACTS, null, null, null, null, null, null);
 
         if (cursor.moveToFirst()) {
@@ -103,9 +104,10 @@ public class SpecifiedUser extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     //deleting the user from database by id
-                    final SQLiteDatabase database = dbHelper.getWritableDatabase();
+                    SQLiteDatabase.loadLibs(view.getContext());
+                    final SQLiteDatabase database = dbHelper.getWritableDatabase("marina");
                     database.execSQL("delete from " + DBHelper.TABLE_CONTACTS
-                            + " where " + DBHelper.KEY_ID + "='" + idUser + "';"); //Iduser from another activity
+                            + " where " + DBHelper.KEY_ID + "='" + idUser + "';"); //Id user from another activity
                     Toast.makeText(view.getContext(), "User is deleted", Toast.LENGTH_SHORT).show();
                     //back to list
                     Intent openList2 = new Intent(getApplicationContext(), Vision.class);

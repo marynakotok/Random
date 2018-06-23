@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Random.iml" filepath="$PROJECT_DIR$/Random.iml" />
+      <module fileurl="file://C:\Users\Marina\Desktop\Random\Random — kopia.iml" filepath="C:\Users\Marina\Desktop\Random\Random — kopia.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

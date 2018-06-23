@@ -2,16 +2,15 @@ package com.example.marina.random;
 
 import android.app.DatePickerDialog;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
+import android.content.SharedPreferences;
+import android.util.Log;
+import net.sqlcipher.database.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -22,11 +21,9 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -51,12 +48,13 @@ public class Insertion extends AppCompatActivity implements View.OnClickListener
     String number_users_string ;
     String reg_date_string;
     String gender;
-
     String json_string;
     JSONObject jsonObject;
     JSONArray jsonArray;
-
+    String pass;
     DBHelper dbHelper;
+    String decrypted_phrase, db_contain;
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,6 +118,7 @@ public class Insertion extends AppCompatActivity implements View.OnClickListener
                 datePickerDialog.show();
                 break;
             case R.id.add:
+
                 add();
                 break;
         }
@@ -177,6 +176,7 @@ public class Insertion extends AppCompatActivity implements View.OnClickListener
     }
 
     private void getJson() {
+        SQLiteDatabase.loadLibs(this);
         new BackgroundTask().execute();
     }
 
@@ -232,12 +232,18 @@ public class Insertion extends AppCompatActivity implements View.OnClickListener
             } else {
                 //Toast.makeText(getApplicationContext(), "Exist Information", Toast.LENGTH_LONG).show();}
                 try {
+                    sharedPreferences = getSharedPreferences("com.example.marina.random", Context.MODE_PRIVATE);
+                    db_contain = sharedPreferences.getString("_phrase", null);
+                    if (db_contain != null)
+                    {
+                        decrypted_phrase = decrypt(db_contain, getResources().getString(R.string.password));
+                    } else Toast.makeText(getBaseContext(), "Database problem!", Toast.LENGTH_LONG).show();
 
                     jsonObject = new JSONObject(json_string);
                     jsonArray = jsonObject.getJSONArray("results");
                     int count = 0;
                     String gender, name, localization, username, password, registered, picture, nat;
-                    SQLiteDatabase database = dbHelper.getWritableDatabase();
+                    SQLiteDatabase database = dbHelper.getWritableDatabase(decrypted_phrase);
                     ContentValues contentValues = new ContentValues();
 
                     while (count < jsonArray.length()) {
@@ -273,8 +279,10 @@ public class Insertion extends AppCompatActivity implements View.OnClickListener
                 }
                 dbHelper.close();
             }
-
         }
+    }
 
+    public String decrypt(String ciphertext, String password) {
+        return Crypto.decryptPbkdf2(ciphertext, password);
     }
 }

@@ -1,9 +1,8 @@
 package com.example.marina.random;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +16,12 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
+import android.content.Context;
+import android.util.Log;
+import net.sqlcipher.database.SQLiteDatabase;
+import net.sqlcipher.Cursor;
+import net.sqlcipher.DatabaseUtils;
+import net.sqlcipher.SQLException;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -32,6 +37,9 @@ public class Vision extends AppCompatActivity {
     myListView_h adaptor_h;
     myListView adaptor;
     int[] ids;
+    String db_contain, decrypted_phrase;
+    SharedPreferences sharedPreferences;
+    String pass;
 
 
     @Override
@@ -39,7 +47,13 @@ public class Vision extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         dbHelper = new DBHelper(this);
         dbHelper_h = new DBHelper(this);
+        sharedPreferences = getSharedPreferences("com.example.marina.random", Context.MODE_PRIVATE);
 
+        db_contain = sharedPreferences.getString("_phrase", null);
+        if (db_contain != null)
+        {
+            decrypted_phrase = decrypt(db_contain, getResources().getString(R.string.password));
+        } else Toast.makeText(getBaseContext(), "Database problem!", Toast.LENGTH_LONG).show();
 
         int orientation = getScreenOrientation();
         if (orientation == 1)
@@ -119,7 +133,9 @@ public class Vision extends AppCompatActivity {
 
         //DATABASE
         dbHelper = new DBHelper(this);
-        SQLiteDatabase database = dbHelper.getWritableDatabase();
+
+        SQLiteDatabase.loadLibs(this);
+        SQLiteDatabase database = dbHelper.getWritableDatabase(decrypted_phrase);
         Cursor cursor = database.query(DBHelper.TABLE_CONTACTS,null,null,null,null,null,null);
         number_rows = cursor.getCount();
         //setting the arrays
@@ -197,7 +213,8 @@ public class Vision extends AppCompatActivity {
 
         //DATABASE
 
-        SQLiteDatabase database = dbHelper_h.getWritableDatabase();
+        SQLiteDatabase.loadLibs(this);
+        SQLiteDatabase database = dbHelper_h.getWritableDatabase(decrypted_phrase);
 
         Cursor cursor = database.query(DBHelper.TABLE_CONTACTS,null,null,null,null,null,null);
         number_rows = cursor.getCount();
@@ -251,6 +268,10 @@ public class Vision extends AppCompatActivity {
             }
         cursor.close();
         dbHelper_h.close();
+    }
+
+    public String decrypt(String ciphertext, String password) {
+        return Crypto.decryptPbkdf2(ciphertext, password);
     }
 }
 

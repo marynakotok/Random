@@ -23,6 +23,7 @@ public class myListView_h extends ArrayAdapter<String>{
     private String picture;
     private int id;
 
+
     Context context;
 
     public myListView_h(Context context, String name[], String gender[],
